@@ -1,11 +1,9 @@
-# # Урок 15. Обзор стандартной библиотеки Python
-# # Возьмите любые 1-3 задания из прошлых домашних заданий. Добавьте к ним логирование
-# # ошибок и полезной информации. Также реализуйте возможность запуска из командной
-# # строки с передачей параметров.
-
-#
-# Например нельзя создавать прямоугольник со сторонами отрицательной длины.
+# Урок 15. Обзор стандартной библиотеки Python
+# Возьмите любые 1-3 задания из прошлых домашних заданий. Добавьте к ним логирование
+# ошибок и полезной информации. Также реализуйте возможность запуска из командной
+# строки с передачей параметров.
 import logging
+import argparse
 from error import ErrorRectangleDimensions
 
 
@@ -45,14 +43,14 @@ class Rectangle:
 
     def get_area(self):
         s = self.width * self.height
-        logger.info(f'perimetr {s} ')
+        logger.info(f'square {s} ')
         return s
 
     def __str__(self):
-        return f'прямоугольник: ({self.height}x{self.width}), S= {self.get_area()}'
+        return f'прямоугольник: ({self.height}x{self.width}), S= {self.get_area()}, P = {self.get_perimetr()}'
 
     def __repr__(self):
-        return f'размеры:({self.height}x{self.width}), S= {self.get_area()}'
+        return f'размеры:({self.height}x{self.width}), S= {self.get_area()}, P = {self.get_perimetr()}'
 
 
 if __name__ == "__main__":
@@ -61,6 +59,15 @@ if __name__ == "__main__":
     logging.basicConfig(format=FORMAT, filename='rectangle.log', style='{', filemode='a', encoding='utf-8',
                         level=logging.NOTSET)
     logger = logging.getLogger(__name__)
-    rect = Rectangle(2, 5)
-    print(rect)
+
+    parser = argparse.ArgumentParser(description='my')
+    parser.add_argument('-w', metavar='w', type=int, default=0, help='ширина прямоугольника')
+    parser.add_argument('-l', metavar='l', type=int, default=0, help='длина прямоугольника')
+    args = parser.parse_args()
+
+    rect = f"{args.w} {args.l}"
+    print(f'{Rectangle(args.w, args.l)}')
+    # rect = Rectangle(-2, 5)
+    # print(rect)
+
 
